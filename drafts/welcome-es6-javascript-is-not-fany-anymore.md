@@ -348,7 +348,7 @@ Again, all these are just a small part of ES6 featureset. There are so many inte
 
 ## Summary
 
-ES6 is the most promising version of JavaScript. It has so many features, those were waiting for years. Definitely, ES6 will help writing more modular and less quirky code in JavaScript.
+ES6 is the most promising version of JavaScript. It has so many features, those,  we were waiting for years. Definitely, ES6 will help writing more modular and less quirky code in JavaScript.
 
 Here in this article, we have seen the problems with the current version of JavaScript, and how ES6 improved to fix them and workarounds. Now, the entire ES6 feature sets are beyond the scope of this post, for that you can also checkout these awesome resources.
 
