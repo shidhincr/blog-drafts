@@ -17,7 +17,9 @@ Currently, we use transpiler tools to compile ES6 code to ES5. There are many to
 
 ## 7 fancy things fixed in ES6 
 
-- **Object.is for better comparison**
+Below are some interesting improvements done in ES6.
+
+**Object.is for better comparison**
 
 New developers who learn JavaScript often get stumbled on the usage of `==` and `===`.  The `===` is a strict comparison operator where it checks the type of the operands too. For example, in the below code:
 
@@ -43,7 +45,7 @@ Object.is(0 ,”0”) // false
 Object.is(0 ,0) // true
 Object.is(NaN, NaN) // true
 ```
-- **Let for block scoping.**
+**Let for block scoping.**
 
 One of the other problem new JavaScript developers face is understanding the lexical scoping. If you’re coming from a language like “C”, you’re more familiar to the block level scoping of variables. But when it comes to JavaScript, there’re not block level scoping. All the variables are hoisted to its containing function ( if there’s any ) else will be part of the global scope. Let’s see the below code: 
 
@@ -86,7 +88,7 @@ for(var i=0,len=anchors.length; i<len; i++){
 
 See how much extra code we need to add to make it work ? Also, this kind of code is unreadable for those are new to JavaScript.
 
-ES6 introduces block scoping in JavaScript using the keyword “**let**”. If we write our  first example, using “**let**”:
+ES6 introduces block scoping in JavaScript using the keyword `let`. If we write our  first example, using `let`:
 
 ```javascript
 if(true){
@@ -97,7 +99,7 @@ if(true){
 console.log(a) // Reference error: a is not defined
 ```
 
-“**let**” also binds the scope to the current block. So in our second example, we can just use let to solve the scoping problem:
+`let` also binds the scope to the current block. So in our second example, we use `let` to solve the scoping problem:
 
 ```javascript
 var anchors = document.getElementsByTagName(“a”);
@@ -110,30 +112,59 @@ for(let i=0,len=anchors.length; i<len; i++){
 The above code should work as expected.
 
  
-- **Multi-line strings and string interpolations.**
-Writing multi line strings in JavaScript was a pain
-using ‘+’ operator for multiline strings
-using \ operator for mult line strings
-using Array join for more readability
+**Multi-line strings and string interpolations.**
 
-Fat Arrow functions for binding ‘this’
+- Writing multi line strings in JavaScript was a pain
+- using ‘+’ operator for multiline strings
+- using \ operator for mult line strings
+- using Array join for more readability
+
+Writing multiline strings is not straightforward. We need to use `\n` ( for newline ) whenever we need a line break.
+
+```javascript
+var myString = 'Lorem ipsum \ndolor sit amet,\n\n\n consectetur adipisicing\n elit.';
+```
+The above code lacks readability. ES6 introduces **template strings** for creating multiline strings. In ES6, we can write the above example like this:
+```javascript
+	var myString = `Lorem ipsum 
+    				dolor sit amet,
+                    
+                    consectetur adipisicing
+                    elit.`
+```
+So, here, we use "\`" ( backtick ) to create the strings.
+
+Another interesting use case of the template strings, are for variable interpolation. In ES5, we cannot do interpolation, but we can achieve similar by replacing the string with regular expressions or by manually appending the variable to the string. For example,
+
+```javascript
+// Using + operator 
+var name = 'Tony';
+var age = 20;
+var greeting = 'Hi, I am '+name+' and my age is '+age;
+console.log(greeting); // This prints 'Hi I am Tony and my age is 20'
+// Using regular expressions
+var greeting = 'Hi, I am %name% and my age is %age%'.replace(/%name%/g,name).replace(/%age%/g,age);
+```
+
+**Fat Arrow functions for binding ‘this’**
+
 One of the scariest for new developes is ‘this’ keyword.
 Simple example of attaching an event handler to and accessing ‘this’ inside that
 Javascript developers fix this problem using that=this; or self=this; ..etc OR even with ES5, using the function .bind() will help to fix this problem
 Fat arrows will make sure that the ‘this’ will always points to the current object. 
 Won’t be able to use .bind(), .call() or .apply() functions to change the context of the execution of the fat arrow functions.
 
-Destructuring 
+**Destructuring**
 
 Refer one of the code from Namshi, ( I guess in connect where I take the oAuth clientId details from configurations )
 Destructing helps to directly assign values to variables in local scope
 
-Default Arguments and Object method shorthands
+**Default Arguments and Object method shorthands**
 
 No more using the ‘||’ operator for default arguents ( explain this )
 No need of the revealing module patterns. We can skip the column part; JavaScript engine will figure it out
 
-The super keyword for invoking super class methods.
+**The super keyword for invoking super class methods.**
 
 Inheritance is one of the key part of  OOP.
 Doing inheritance is difficult in JavaScript. and mostly in most of the frameworks implemented inheritance will have a method like this:
@@ -147,14 +178,15 @@ var child = {
 }
 };
 
-Apart from all these, ES6 added lot of new features, like Promises, Classes, Generator and Iterators ..etc. 
+Again, these are only small parts of ES6 featureset.There are so many interesting features like Promises, Classes, Generator and Iterators ..etc. 
 
-Summary
+## Summary
 
 ES6 is one of promising version of JavaScript. It has lot of features those developers were aspiring for years. Definitely, ES6 will help writing more modular and less quirky code in JavaScript.
 
 Here in this article, we have seen the problems with the current version of JavaScript, and how ES6 improved to fix them and workarounds. Now, the entire ES6 feature sets are beyond the scope of this post, for that you can also checkout these awesome resources.
 
-https://github.com/lukehoban/es6features
-https://github.com/ericdouglas/ES6-Learning
-http://espadrine.github.io/New-In-A-Spec/es6/ 
+- https://github.com/lukehoban/es6features
+- https://github.com/ericdouglas/ES6-Learning
+- http://espadrine.github.io/New-In-A-Spec/es6/
+- http://tc39wiki.calculist.org/es6/
