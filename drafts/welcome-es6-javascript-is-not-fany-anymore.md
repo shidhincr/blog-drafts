@@ -14,7 +14,6 @@ Again, I am not saying ES6 has only good parts. As of now, most of the ES6 featu
 
 Currently, we use transpiler tools to compile ES6 code to ES5. There are many tools available, but Google’s [traceur](https://github.com/google/traceur-compiler) is the popular among them.
 
-
 ## 8 fancy things fixed in ES6 
 
 Below are some interesting improvements done in ES6.
@@ -57,7 +56,6 @@ if(true){
 // outside the if block
 console.log(a); // a is accessible here also and prints 10
 ```
-
 The following is a popular example of this scope issue. See below
 
 Assume that we have 10 anchor tags in an html page. We need to have a JavaScript code to alert the index of each anchor tag whenever it’s clicked. Typically, the code might look like this:
@@ -70,7 +68,6 @@ for(var i=0,len=anchors.length; i<len; i++){
 	};
 }
 ```
-
 The above code doesn’t work as expected. Whenever we click on any of the anchor tag, we’re going to get the last value of `i`. Here, we’ll get always 10 alerted. 
 
 To  workaround this kind of situations, in ES5, we use closures. Using closures, we can bind the right value of `i` to the onclick handler. See the code below:
@@ -85,7 +82,6 @@ for(var i=0,len=anchors.length; i<len; i++){
 	})(i);
 }
 ```
-
 See how much extra code we need to add to make it work ? Also, this piece of code is unreadable for those are new to JavaScript.
 
 ES6 introduces block scoping in JavaScript using the keyword `let`. If we write our  first example, using `let`:
@@ -111,7 +107,6 @@ for(let i=0,len=anchors.length; i<len; i++){
 ```
 The above code should work as expected.
 
- 
 **Multi-line strings and string interpolations.**
 
 Writing multiline strings is not straightforward. We need to use `\n` ( for newline ) whenever we need a line break.
@@ -212,8 +207,53 @@ sayName(); // logs Jerry
 
 **Destructuring**
 
-Refer one of the code from Namshi, ( I guess in connect where I take the oAuth clientId details from configurations )
-Destructing helps to directly assign values to variables in local scope
+One of the hardest thing in ES5 is destructuring. Destructing is the process of assigning the property values of an object to local variable. For example, in ES5, we do like this:
+
+```javascript
+	var myGlobalConfig = {
+    	apiUrl: 'www.google.com/api',
+        data1: 'some value',
+        data2: 'another value',
+        methodType: 'POST'
+        // ... etc
+    };
+    
+    // and in one of our function
+    
+    function makeAjaxRequest(config){
+    	var url = config.url;
+        var method = config.methodType;
+        var data = config.data2;
+        $.ajax(url, method, data );
+    }
+    
+    // call makeAjaxRequest
+    makeAjaxRequest( myGlobalConfig );
+```
+
+In the above code, whenever a function requires arguments as multiple parameters, we need to extract values from the our config object and pass them as parameters. That is, seriously, a lot of code.
+
+ES6 allows direct destructing assignments. So we can write the above example in a simple way, like this:
+
+```javascript
+	var myGlobalConfig = {
+    	apiUrl: 'www.google.com/api',
+        data1: 'some value',
+        data2: 'another value',
+        methodType: 'POST'
+        // ... etc
+    };
+    
+    // and in one of our function
+    
+    function makeAjaxRequest(config){
+    	var { url, methodType, data2 } = config;
+        $.ajax(url, methodType, data2 );
+    }
+    
+    // call makeAjaxRequest
+    makeAjaxRequest( myGlobalConfig );
+```
 
 **Default Arguments Values for Functions**
 
