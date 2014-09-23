@@ -15,7 +15,7 @@ Again, I am not saying ES6 has only good parts. As of now, most of the ES6 featu
 Currently, we use transpiler tools to compile ES6 code to ES5. There are many tools available, but Google’s [traceur](https://github.com/google/traceur-compiler) is the popular among them.
 
 
-## 7 fancy things fixed in ES6 
+## 8 fancy things fixed in ES6 
 
 Below are some interesting improvements done in ES6.
 
@@ -129,7 +129,7 @@ The above code lacks readability. ES6 introduces **template strings** for creati
 ```
 So, here, we use "\`" ( backtick ) to create the strings.
 
-Another interesting usecase of the template strings is, for variable interpolation. In ES5, we cannot do interpolation, but we can achieve similar by replacing the string with regular expressions or by manually appending the variable to the string. For example,
+Another interesting usecase of the template strings is variable interpolation. In ES5, we cannot do interpolation, but we can achieve similar by replacing the string with regular expressions or by manually appending the variable to the string. For example,
 
 ```javascript
 // Using + operator 
@@ -215,30 +215,100 @@ sayName(); // logs Jerry
 Refer one of the code from Namshi, ( I guess in connect where I take the oAuth clientId details from configurations )
 Destructing helps to directly assign values to variables in local scope
 
-**Default Arguments and Object method shorthands**
+**Default Arguments Values for Functions**
 
-No more using the ‘||’ operator for default arguents ( explain this )
-No need of the revealing module patterns. We can skip the column part; JavaScript engine will figure it out
+One of the best feature in ES6 is default arguments. As of now, we use the `||` to have default values for the function parameters. See the below code:
+
+```javascript
+	var myFunction = function(a, b, c){
+    	a = a || 10;
+        b = b || 5;
+        c = c || 8;
+        return a*b*c;
+    };
+```
+Here is the same code will be written in ES6:
+
+```javascript
+	var myFunction = function(a=10, b=5, c=8){
+        return a*b*c;
+    };
+```
+**Object method shorthands**
+
+In JavaScript, one of the common design pattern while for objects is the revealing module pattern. In this pattern, all the public method/property of an object will have its own private counterpart. For example,
+
+```javascript
+	var myObject = (function(){
+    	var sayName = function(){
+        	console.log('this is sayname function');
+        };
+        var greet = 'This is a greeting';
+        return {
+        	greet: greet,
+        	sayName: sayName
+        }
+    })();
+```
+The above pattern is called **Revealing module pattern**. ES6 simplified this much better by eliminating the column part. Thus, in ES6, we can write the above code like this:
+
+```javascript
+	var myObject = (function(){
+    	var sayName = function(){
+        	console.log('this is sayname function');
+        };
+		var greet = 'This is a greeting';
+        return {
+        	greet,
+        	sayName
+        }
+    })();
+```
 
 **The super keyword for invoking super class methods.**
 
-Inheritance is one of the key part of  OOP.
-Doing inheritance is difficult in JavaScript. and mostly in most of the frameworks implemented inheritance will have a method like this:
-subClass._super.apply(this, arguments); or subClass.uber.apply(this,arguments)
-Here we have the super keyword to the rescue. ‘super’ will point to the parent object i this case: 
-var child = {
-    // __proto__
-    __proto__: parent,
-	eat: function(){
-	super.eat();
-}
-};
+JavaScript supports object oriented programming. But, inheritance is tricky in JavaScript, as it's not support natively. JavaScript even has the `super` keyword, however, it's not functional.
 
-Again, these are only small parts of ES6 featureset.There are so many interesting features like Promises, Classes, Generator and Iterators ..etc. 
+Most of the JavaScript frameworks, those who implemented inheritance, have a pattern like this:
+
+```javascript
+	var myBaseObj = {
+    	sayName: function(){
+        	// .. do something
+        };
+    };
+    
+    var mySubObj = Framework.extend(myBaseObj, {
+    	sayName: function(){
+        	this._super.apply(this,arguments);
+            // .. do something else
+        }
+    })
+```
+These framework used `_super` ( or sometimes `uber` ) to invoke the parent method. This is because, `super` was a keyword in JavaScript, and it's not allowed to use it as an identifier or method. 
+
+Now, the time has come; We have `super` implemented in ES6, and see how the inheritance can be done:
+
+```javascript
+	var myBaseObj = {
+    	sayName: function(){
+        	// .. do something
+        };
+    };
+    var mySubObj = {
+    	__proto__: myBaseObj,
+    	sayName: function(){
+        	super.sayName();
+            // .. do something else
+        }
+    })
+```
+
+Again, all these are just a small part of ES6 featureset. There are so many interesting features like Promises, Classes, Generator and Iterators ..etc. 
 
 ## Summary
 
-ES6 is one of promising version of JavaScript. It has lot of features those developers were aspiring for years. Definitely, ES6 will help writing more modular and less quirky code in JavaScript.
+ES6 is the most promising version of JavaScript. It has so many features, those were waiting for years. Definitely, ES6 will help writing more modular and less quirky code in JavaScript.
 
 Here in this article, we have seen the problems with the current version of JavaScript, and how ES6 improved to fix them and workarounds. Now, the entire ES6 feature sets are beyond the scope of this post, for that you can also checkout these awesome resources.
 
