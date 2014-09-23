@@ -51,11 +51,11 @@ One of the other problem new JavaScript developers face is understanding the lex
 
 ```javascript
 if(true){
-  var a =10
-  console.log(a) // 10
+  var a = 10;
+  console.log(a); // 10
 }
 // outside the if block
-console.log(a) // a is accessible here also and prints 10
+console.log(a); // a is accessible here also and prints 10
 ```
 
 The following is a popular example of this scope issue. See below
@@ -67,7 +67,7 @@ var anchors = document.getElementsByTagName(“a”);
 for(var i=0,len=anchors.length; i<len; i++){
 	anchors[i].onclick = function(){
 		alert(i);
-	}
+	};
 }
 ```
 
@@ -81,19 +81,19 @@ for(var i=0,len=anchors.length; i<len; i++){
 	anchors[i].onclick = (function(){
 		return function(){
 			alert(i);
-		}
-	})(i)
+		};
+	})(i);
 }
 ```
 
-See how much extra code we need to add to make it work ? Also, this kind of code is unreadable for those are new to JavaScript.
+See how much extra code we need to add to make it work ? Also, this piece of code is unreadable for those are new to JavaScript.
 
 ES6 introduces block scoping in JavaScript using the keyword `let`. If we write our  first example, using `let`:
 
 ```javascript
 if(true){
-  let a =10
-  console.log(a) // 10
+  let a = 10;
+  console.log(a); // 10
 }
 // outside the if block
 console.log(a) // Reference error: a is not defined
@@ -114,11 +114,6 @@ The above code should work as expected.
  
 **Multi-line strings and string interpolations.**
 
-- Writing multi line strings in JavaScript was a pain
-- using ‘+’ operator for multiline strings
-- using \ operator for mult line strings
-- using Array join for more readability
-
 Writing multiline strings is not straightforward. We need to use `\n` ( for newline ) whenever we need a line break.
 
 ```javascript
@@ -130,11 +125,11 @@ The above code lacks readability. ES6 introduces **template strings** for creati
     				dolor sit amet,
                     
                     consectetur adipisicing
-                    elit.`
+                    elit.`;
 ```
 So, here, we use "\`" ( backtick ) to create the strings.
 
-Another interesting use case of the template strings, are for variable interpolation. In ES5, we cannot do interpolation, but we can achieve similar by replacing the string with regular expressions or by manually appending the variable to the string. For example,
+Another interesting usecase of the template strings is, for variable interpolation. In ES5, we cannot do interpolation, but we can achieve similar by replacing the string with regular expressions or by manually appending the variable to the string. For example,
 
 ```javascript
 // Using + operator 
@@ -142,17 +137,78 @@ var name = 'Tony';
 var age = 20;
 var greeting = 'Hi, I am '+name+' and my age is '+age;
 console.log(greeting); // This prints 'Hi I am Tony and my age is 20'
+
 // Using regular expressions
 var greeting = 'Hi, I am %name% and my age is %age%'.replace(/%name%/g,name).replace(/%age%/g,age);
+console.log(greeting); // This prints 'Hi I am Tony and my age is 20'
+```
+In ES6, the above code is so much simplified. Same can be written like this:
+
+```javascript
+var name = 'Tony';
+var age = 20;
+var greeting = 'Hi, I am ${name} and my age is ${age}';
+console.log(greeting); // This prints 'Hi I am Tony and my age is 20'
 ```
 
-**Fat Arrow functions for binding ‘this’**
+**Fat Arrow functions for binding `this`**
 
-One of the scariest for new developes is ‘this’ keyword.
-Simple example of attaching an event handler to and accessing ‘this’ inside that
-Javascript developers fix this problem using that=this; or self=this; ..etc OR even with ES5, using the function .bind() will help to fix this problem
-Fat arrows will make sure that the ‘this’ will always points to the current object. 
-Won’t be able to use .bind(), .call() or .apply() functions to change the context of the execution of the fat arrow functions.
+Most of the new developers get struggled to understand the `this` in JavaScript. The `this` is nothing but the execution context for a function. And for object methods, `this` points to the object holding the method. If the function is executed not as an object method, the `this` will point to the global object ( usually the window object).
+
+`this` can be confusing so many times. Look at the below example:
+
+```javascript
+var name = 'Tom';
+var obj = {
+    name: 'Jerry',
+	sayName: function(){
+    	console.log( this.name );
+    }
+};
+obj.sayName(); // logs Jerry
+var sayName = obj.sayName;
+sayName(); // logs Tom
+```
+
+When the `sayName` is executed as an object method, `this` was pointing to object itself; but when it's executed as a normal function, `this` was pointing to the global window object.
+
+In ES5, we use either `Function.bind` or `Function.call` or `Function.apply` to fix this kind of problems. All these methods use to dynamically change the `this` ( execution context )  of a function. So we can write it like this:
+
+```javascript
+var name = 'Tom';
+var obj = {
+    name: 'Jerry',
+	sayName: function(){
+    	console.log( this.name );
+    }
+};
+obj.sayName(); // logs Jerry
+
+// Using call or apply
+var sayName = obj.sayName;
+sayName.call(obj); // logs Jerry
+sayName.apply(obj); // logs Jerry
+
+// Using bind
+var sayName = obj.sayName.bind(obj);
+sayName(); // logs Jerry
+```
+
+ES6 added arrow functions to get rid of the scoping problems. An arrow function will always lexically binded `this` value to the holding object. So the above code can be written in ES6 like this:
+
+```javascript
+var name = 'Tom';
+var obj = {
+    name: 'Jerry',
+	sayName: => {
+    	console.log( this.name );
+    }
+};
+obj.sayName(); // logs Jerry
+var sayName = obj.sayName;
+sayName(); // logs Jerry
+```
+**Note:** _Since the arrow function is already bound its execution context, we cannot apply .bind(), .call() or .apply() methods on it again._
 
 **Destructuring**
 
