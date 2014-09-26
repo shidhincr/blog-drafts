@@ -1,6 +1,6 @@
 # Welcome ES6 !! JavaScript is not fancy anymore
 
-For years, JavaScript was considered to be a toy language. But, things changed, and JavaScript is one of the popular and powerful language in the world. The simplicity of the language made it so popular, however, new developers trying to learn JavaScript feel that it’s fancy sometimes. 
+For years, JavaScript was considered as a toy language. It was used for creating interactive web pages and could run only in the browser. But, things changed; JavaScript is used in both server and browser these days. The simplicity of the language made it so popular, and, attracted more new developers to the comunity. 
 
 The fanciness is because of some of the known problems with the language itself -- and the workarounds for fixing those. For example, a developer coming from C based languages will have problems with JavaScript variable scopes and hoisting (  as JavaScript doesn’t have block scoping ), and he might feel the lexical scoping in JavaScript is fancy.
 
