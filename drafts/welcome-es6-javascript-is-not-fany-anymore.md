@@ -2,7 +2,7 @@
 
 For years, JavaScript was considered as a toy language. It was used for creating interactive web pages and could run only in the browser. But, things changed; JavaScript is used in both server and browser these days. The simplicity of the language made it so popular, and more new developers started adapting for large and complex projects. 
 
-However,still,new developers felt JavaScript is fancy at sometimes. The fanciness is because of some of the known drawbacks in the language itself -- and the workarounds put in place for fixing them. For example, someone from the "C" language background is more familiar to block level scoping, but will have difficulties understanding the lexical scoping in JavaScript. Thus, all these lexical scoping, variable hoisting are fancy stuff for them.
+However,still,new developers felt JavaScript is fancy at sometimes. The fanciness is because of some of the known drawbacks in the language itself -- and the workarounds put in place for fixing them. For example, someone from the "C" language background is more familiar to block level scoping, but will have difficulties understanding the lexical scoping in JavaScript. Thus, all these lexical scoping, variable hoisting, closures seems fancy stuff for them.
 
 **TC39**, the committee responsible for ES6 standardization, have seen all these concerns, and ES6 is going to give vast makeover to JavaScript. ES6 has lot of new features added, and existing bad parts fixed. If you don’t know about the JavaScript good vs bad parts, you should definitely check out Douglas Crockford’s book [JavaScript, the Good Parts](http://www.amazon.com/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742)
 
