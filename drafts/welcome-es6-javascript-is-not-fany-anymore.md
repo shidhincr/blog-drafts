@@ -310,9 +310,9 @@ The above pattern is called **Revealing module pattern**. In ES6, it's much simp
 
 **The super keyword for invoking super class methods.**
 
-JavaScript supports object oriented programming. But, inheritance is tricky in JavaScript, as it's not support natively. JavaScript even has the `super` keyword, however, it's not functional.
+JavaScript supports object oriented programming. But, implementing inheritance is tricky in JavaScript, as it's not supported natively. JavaScript even has the `super` keyword, however, it's not functional.
 
-Most of the JavaScript frameworks, those who implemented inheritance, have a pattern like this:
+Most of the JavaScript frameworks, those implemented inheritance, have a pattern like this:
 
 ```javascript
 	var myBaseObj = {
@@ -328,9 +328,9 @@ Most of the JavaScript frameworks, those who implemented inheritance, have a pat
         }
     })
 ```
-These framework used `_super` ( or sometimes `uber` ) to invoke the parent method. This is because, `super` was a keyword in JavaScript, and it's not allowed to use it as an identifier or method. 
+These framework used `_super` ( or sometimes `uber` ) to invoke the parent method. This is because, `super` was a reserved keyword ( for future ) in JavaScript, and it's not allowed to use it as an identifier or method. 
 
-Now, the time has come; We have `super` implemented in ES6, and see how the inheritance can be done:
+Now, the time has come; the "future" mentioned in previous section is, ES6. JavaScript has `super` implemented in ES6. Now let's see how inheritance can be done:
 
 ```javascript
 	var myBaseObj = {
