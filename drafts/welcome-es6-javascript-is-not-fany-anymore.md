@@ -1,10 +1,8 @@
 # Welcome ES6 !! JavaScript is not fancy anymore
 
-For years, JavaScript was considered as a toy language. It was used for creating interactive web pages and could run only in the browser. But, things changed; JavaScript is used in both server and browser these days. The simplicity of the language made it so popular, and more new developers started adapting for large and complex projects. 
+For years, JavaScript was considered as a toy language. It was used for creating interactive web pages and could run only in the browser. But, things changed; JavaScript is used in both server and browser these days. The simplicity of the language made it so popular, and developers started using it for large and complex projects. 
 
-However,still,new developers felt JavaScript is fancy at sometimes. The fanciness is because of some of the known drawbacks in the language itself -- and the workarounds put in place for fixing them. For example, someone from the "C" language background is more familiar to block level scoping, but will have difficulties understanding the lexical scoping in JavaScript. Thus, all these lexical scoping, variable hoisting, closures seems fancy stuff for them.
-
-**TC39**, the committee responsible for ES6 standardization, have seen all these concerns, and ES6 is going to give vast makeover to JavaScript. ES6 has lot of new features added, and existing bad parts fixed. If you don’t know about the JavaScript good vs bad parts, you should definitely check out Douglas Crockford’s book [JavaScript, the Good Parts](http://www.amazon.com/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742)
+Still, however, new developers felt JavaScript is fancy at sometimes. The fanciness is because of some of the known drawbacks in the language itself -- and the workarounds put in place for fixing them. For example, a developer from the "C" language background is more familiar to block level scoping, but will have difficulties understanding the lexical scoping in JavaScript. And, all these lexical scoping, variable hoisting, closures seems fancy stuff for him.
 
 ES6, the future version, going to give a vast makeover to JavaScript. The **TC39** committee ( responsible for ES6 standardization ) have taken care most of the concerns about JavaScript, and now ES6 is getting lot of new features added, and existing bad parts fixed. If you want to know about the JavaScript good vs bad parts, checkout Douglas Crockford’s book [JavaScript, the Good Parts](http://www.amazon.com/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742).
 
@@ -12,9 +10,9 @@ This post is **not** about complete ES6 feature-set. Here, we'll see some of the
 
 ## ES6, all good parts ?
 
-Again, I am not saying ES6 has only good parts. As of now, most of the ES6 features are not supported by browsers ( as they’re in draft ). Once developers start writing the code more and more, we can clearly see what are the good and bad parts of ES6. 
+Again, I am not saying ES6 has only good parts. To be honest, I don't know. ES6 is not completely ready for live applications. Design patterns will automatically evolve once the language is used extensively. Design patterns can tell which one is the bad part or good part. 
 
-Currently, we use transpiler tools to compile ES6 code to ES5. There are many tools available, but Google’s [traceur](https://github.com/google/traceur-compiler) is the popular among them.
+As of now, most of the ES6 features are not supported by browsers ( as they’re in draft ). We use transpiler tools to compile ES6 code to ES5. There are many tools available, but Google’s [traceur](https://github.com/google/traceur-compiler) is the popular among them.
 
 ## 8 fancy things fixed in ES6 
 
@@ -22,7 +20,7 @@ Below are some interesting improvements done in ES6.
 
 **Object.is for better comparison**
 
-New developers who learn JavaScript often get stumbled on the usage of `==` and `===`.  The `===` is a strict comparison operator where it checks the type of the operands too. For example, in the below code:
+New developers who learn JavaScript often get stumbled on the usage of `==` and `===`.  The `===` is a strict comparison operator where it checks the type of the operands also. For example, in the below code:
 
 ```javascript
 “0” == 0  // true
@@ -32,14 +30,16 @@ but
 “0” === 0 // false
 ```
 
-It’s always recommended to use `===` operator. However, `NaN`  is an exceptional case even if we use the `===` for comparing. That means, 
+It’s always recommended to use `===` operator. However, there is an excepton to this. We cannot compare `NaN` using any of these operators. We need to use the global function `isNaN` to check if any variable is holding a `NaN` value or not.
 
 ```javascript
 NaN == NaN  // false
 NaN === NaN  // false
+
+var result = isNan(NaN) // true
 ```
 
-`Object.is` an attempt to have a better comparison method. It more or less similar to the `===` operator, except it does the proper comparison for NaN also.
+`Object.is` an attempt to have a better comparison method. It is same as the  `===` operator, except it can compare `NaN` also.
 
 ```javascript
 Object.is(0 ,”0”) // false
@@ -48,7 +48,7 @@ Object.is(NaN, NaN) // true
 ```
 **Let for block scoping.**
 
-One of the other problem new JavaScript developers face is understanding the lexical scoping. If you’re coming from a language like “C”, you’re more familiar to the block level scoping of variables. But when it comes to JavaScript, there’re not block level scoping. All the variables are hoisted to its containing function ( if there’s any ) else will be part of the global scope. Let’s see the below code: 
+As opposed to the languages like "C", JavaScript doesn't have block scoping. All variable inside a block are hoisted to its containing function ( if any ) or will be part of the global scope. 
 
 ```javascript
 if(true){
@@ -58,9 +58,9 @@ if(true){
 // outside the if block
 console.log(a); // a is accessible here also and prints 10
 ```
-The following is a popular example of this scope issue. See below
+Following is a popular example of this:
 
-Assume that we have 10 anchor tags in an html page. We need to have a JavaScript code to alert the index of each anchor tag whenever it’s clicked. Typically, the code might look like this:
+Assume that we have 10 anchor tags in an html page. We need to alert the index of each anchor tag whenever it’s clicked. Now, look at the code below:
 
 ```javascript
 var anchors = document.getElementsByTagName(“a”);
@@ -70,9 +70,9 @@ for(var i=0,len=anchors.length; i<len; i++){
 	};
 }
 ```
-The above code doesn’t work as expected. Whenever we click on any of the anchor tag, we’re going to get the last value of `i`. Here, we’ll get always 10 alerted. 
+If we think the above code works, we're wrong. It's the last value of `i` gets alerted always. Here we'll see **10** getting alerted always.
 
-To  workaround this kind of situations, in ES5, we use closures. Using closures, we can bind the right value of `i` to the onclick handler. See the code below:
+We use a **closure** to fix this problem. Using closure, we can bind the right value of `i` to the onclick handler. See the code below:
 
 ```javascript
 var anchors = document.getElementsByTagName(“a”);
@@ -84,9 +84,9 @@ for(var i=0,len=anchors.length; i<len; i++){
 	})(i);
 }
 ```
-See how much extra code we need to add to make it work ? Also, this piece of code is unreadable for those are new to JavaScript.
+Above code now became unreadable and totally fancy to a new developer. Now we know why the word **"fancy"** is here.
 
-ES6 introduces block scoping in JavaScript using the keyword `let`. If we write our  first example, using `let`:
+ES6 introduces block scoping in JavaScript using a keyword `let`. If we write our first example, using `let`:
 
 ```javascript
 if(true){
@@ -97,7 +97,7 @@ if(true){
 console.log(a) // Reference error: a is not defined
 ```
 
-`let` also binds the scope to the current block. So in our second example, we use `let` to solve the scoping problem:
+`let` also binds the scope of the variable to current block. In our second example, we can use `let` to solve the scoping problem:
 
 ```javascript
 var anchors = document.getElementsByTagName(“a”);
@@ -107,16 +107,17 @@ for(let i=0,len=anchors.length; i<len; i++){
 	}
 }
 ```
-The above code should work as expected.
+Now the above code should work as expected.
 
 **Multi-line strings and string interpolations.**
 
-Writing multiline strings is not straightforward. We need to use `\n` ( for newline ) whenever we need a line break.
+Writing multiline strings is not so straightforward. The `\n` ( for newline ) have to be added where ever a line break is needed.
 
 ```javascript
 var myString = 'Lorem ipsum \ndolor sit amet,\n\n\n consectetur adipisicing\n elit.';
 ```
-The above code lacks readability. ES6 introduces **template strings** for creating multiline strings. In ES6, we can write the above example like this:
+ES6 introduces **template strings** for creating multiline strings. In ES6, we can write the above example like this:
+
 ```javascript
 	var myString = `Lorem ipsum 
     				dolor sit amet,
@@ -124,9 +125,9 @@ The above code lacks readability. ES6 introduces **template strings** for creati
                     consectetur adipisicing
                     elit.`;
 ```
-So, here, we use "\`" ( backtick ) to create the strings.
+So, here, we can use "\`" ( backtick ) to create the strings.
 
-Another interesting usecase of the template strings is variable interpolation. In ES5, we cannot do interpolation, but we can achieve similar by replacing the string with regular expressions or by manually appending the variable to the string. For example,
+Another interesting usecase of the template strings is variable interpolation. There is no native variable interpolation in ES5, but can be achieved a similar by regular expressions or by manually appending the variable to the string. For example,
 
 ```javascript
 // Using + operator 
@@ -139,7 +140,7 @@ console.log(greeting); // This prints 'Hi I am Tony and my age is 20'
 var greeting = 'Hi, I am %name% and my age is %age%'.replace(/%name%/g,name).replace(/%age%/g,age);
 console.log(greeting); // This prints 'Hi I am Tony and my age is 20'
 ```
-In ES6, the above code is so much simplified. Same can be written like this:
+In ES6, the above code is really simplified. Same can be written like this:
 
 ```javascript
 var name = 'Tony';
@@ -150,9 +151,9 @@ console.log(greeting); // This prints 'Hi I am Tony and my age is 20'
 
 **Fat Arrow functions for binding `this`**
 
-Most of the new developers get struggled to understand the `this` in JavaScript. The `this` is nothing but the execution context for a function. And for object methods, `this` points to the object holding the method. If the function is executed not as an object method, the `this` will point to the global object ( usually the window object).
+Most of the new developers get struggled to understand `this` keyword in JavaScript. `this` is nothing but the execution context for a function, and for methods, `this` points to the object holding it. If the function is executed not as a method of an object, `this` will point to the global object ( usually the window object).
 
-`this` can be confusing so many times. Look at the below example:
+`this` can be confusing in many times. Look at the below example:
 
 ```javascript
 var name = 'Tom';
@@ -167,9 +168,9 @@ var sayName = obj.sayName;
 sayName(); // logs Tom
 ```
 
-When the `sayName` is executed as an object method, `this` was pointing to object itself; but when it's executed as a normal function, `this` was pointing to the global window object.
+When the `sayName` is executed as an object method, `this` was pointing to object itself; but when it's executed as a normal function, `this` points to the global window object.
 
-In ES5, we use either `Function.bind` or `Function.call` or `Function.apply` to fix this kind of problems. All these methods use to dynamically change the `this` ( execution context )  of a function. So we can write it like this:
+We usually use either `Function.bind` or `Function.call` or `Function.apply` to fix these kind of problems.
 
 ```javascript
 var name = 'Tom';
@@ -191,7 +192,7 @@ var sayName = obj.sayName.bind(obj);
 sayName(); // logs Jerry
 ```
 
-ES6 added arrow functions to get rid of the scoping problems. An arrow function will always lexically binded `this` value to the holding object. So the above code can be written in ES6 like this:
+ES6 added arrow functions to get rid of the scoping issues. An arrow function will always lexically binded `this` value to it's surrounding environment. So the above code can be written in ES6 like this:
 
 ```javascript
 var name = 'Tom';
@@ -209,7 +210,7 @@ sayName(); // logs Jerry
 
 **Destructuring**
 
-One of the hardest thing in ES5 is destructuring. Destructing is the process of assigning the property values of an object to local variable. For example, in ES5, we do like this:
+Destructing is the process of assigning the property values of an object to local variable. For example, in JavaScript, we do like this:
 
 ```javascript
 	var myGlobalConfig = {
@@ -233,7 +234,7 @@ One of the hardest thing in ES5 is destructuring. Destructing is the process of 
     makeAjaxRequest( myGlobalConfig );
 ```
 
-In the above code, whenever a function requires arguments as multiple parameters, we need to extract values from the our config object and pass them as parameters. That is, seriously, a lot of code.
+In the above code, whenever a function requires arguments as multiple parameters, we need to extract values from the our config object and pass them as parameters. This is a problem when we have large number of values needs to be extracted.
 
 ES6 allows direct destructing assignments. So we can write the above example in a simple way, like this:
 
@@ -278,7 +279,7 @@ Here is the same code will be written in ES6:
 ```
 **Object method shorthands**
 
-In JavaScript, one of the common design pattern while for objects is the revealing module pattern. In this pattern, all the public method/property of an object will have its own private counterpart. For example,
+Look at the below object creation pattern. In this, all the public method/property of an object will have its own private counterpart. For example,
 
 ```javascript
 	var myObject = (function(){
@@ -292,7 +293,7 @@ In JavaScript, one of the common design pattern while for objects is the reveali
         }
     })();
 ```
-The above pattern is called **Revealing module pattern**. ES6 simplified this much better by eliminating the column part. Thus, in ES6, we can write the above code like this:
+The above pattern is called **Revealing module pattern**. In ES6, it's much simplified by eliminating the column part. Thus,we can write the above code like this:
 
 ```javascript
 	var myObject = (function(){
